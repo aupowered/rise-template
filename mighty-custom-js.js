@@ -21,3 +21,4 @@ function init() {
                 subtree: true,
         });
 }
+init();
