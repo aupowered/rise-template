@@ -1,7 +1,7 @@
 /**
  * Logic for fill-in-the-blank course activities.
  */
-const copyBtn = document.getElementById('copyTemplate');
+const copyBtns = document.querySelectorAll('.copyBtn');
 const outputs = document.querySelectorAll(`span[class^='output']`);
 const dates = document.querySelectorAll('.outputDate')
 const liveRegion = document.getElementById('liveRegion');
@@ -49,36 +49,37 @@ function formatDateTime(datetimeArray) {
         }
     }
 }
-copyBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const inputs = document.querySelectorAll('input,textarea');
-    const textToCopy = document.createElement('textarea');
-
-    // Copy input values to array
-    const inputValues = Array.from(inputs).map(input => input.value);
-    formatDateTime(inputValues);
-
-    // Update live region with full sentence
-    outputs.forEach((output, index) => {
-        if (inputValues[index]) {
-            output.innerHTML = inputValues[index];
+copyBtns.forEach(copyBtn => {
+    copyBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const inputs = document.closest('fieldset').querySelectorAll('input,textarea');
+        const textToCopy = document.createElement('textarea');
+    
+        // Copy input values to array
+        const inputValues = Array.from(inputs).map(input => input.value);
+        formatDateTime(inputValues);
+    
+        // Update live region with full sentence
+        outputs.forEach((output, index) => {
+            if (inputValues[index]) {
+                output.innerHTML = inputValues[index];
+            }
+        });
+    
+        // Copy to clipboard
+        textToCopy.value = liveRegion.innerText;
+        textToCopy.classList.add('visually-hidden');
+        document.body.appendChild(textToCopy);
+        textToCopy.focus();
+        textToCopy.select();
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) console.log('Text copied!');
+        } catch (err) {
+            console.error('Fallback failed', err);
         }
+    
+        // Cleanup
+        document.body.removeChild(textToCopy);
     });
-
-    // Copy to clipboard
-    textToCopy.value = liveRegion.innerText;
-    textToCopy.classList.add('visually-hidden');
-    document.body.appendChild(textToCopy);
-    textToCopy.focus();
-    textToCopy.select();
-    console.log(textToCopy.value);
-    try {
-        const successful = document.execCommand('copy');
-        if (successful) console.log('Text copied!');
-    } catch (err) {
-        console.error('Fallback failed', err);
-    }
-
-    // Cleanup
-    document.body.removeChild(textToCopy);
 });
