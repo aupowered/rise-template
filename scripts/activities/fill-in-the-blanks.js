@@ -4,7 +4,6 @@
 const copyBtns = document.querySelectorAll('.copyBtn');
 const outputs = document.querySelectorAll(`span[class^='output']`);
 const dates = document.querySelectorAll('.outputDate')
-const liveRegion = document.getElementById('liveRegion');
 
 /**
  * Format an array of HTML input values into readable dates and times.
@@ -52,7 +51,9 @@ function formatDateTime(datetimeArray) {
 copyBtns.forEach(copyBtn => {
     copyBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        const inputs = document.closest('fieldset').querySelectorAll('input,textarea');
+        const parent = e.target.parentElement;
+        const inputs = parent.querySelectorAll('input,textarea');
+        const liveRegion = parent.querySelector('.liveRegion');
         const textToCopy = document.createElement('textarea');
     
         // Copy input values to array
