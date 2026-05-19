@@ -2,7 +2,6 @@
  * Logic for fill-in-the-blank course activities.
  */
 const copyBtns = document.querySelectorAll('.copyBtn');
-const outputs = document.querySelectorAll(`span[class^='output']`);
 const dates = document.querySelectorAll('.outputDate')
 
 /**
@@ -54,6 +53,7 @@ copyBtns.forEach(copyBtn => {
         const parent = e.target.parentElement;
         const inputs = parent.querySelectorAll('input,textarea');
         const liveRegion = parent.querySelector('.liveRegion');
+        const outputs = parent.querySelectorAll(`span[class^='output']`);
         const textToCopy = document.createElement('textarea');
     
         // Copy input values to array
