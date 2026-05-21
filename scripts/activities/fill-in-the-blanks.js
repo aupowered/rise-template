@@ -51,7 +51,7 @@ copyBtns.forEach(copyBtn => {
     copyBtn.addEventListener('click', (e) => {
         e.preventDefault();
         const parent = e.target.parentElement;
-        const inputs = parent.querySelectorAll('input,textarea');
+        const inputs = parent.querySelectorAll('input,select,textarea');
         const liveRegion = parent.querySelector('.liveRegion');
         const outputs = parent.querySelectorAll(`span[class^='output']`);
         const textToCopy = document.createElement('textarea');
